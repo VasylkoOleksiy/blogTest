@@ -1,0 +1,45 @@
+
+{% extends "blog/base.html" %}
+{% block title %} Posts List {% endblock %}
+
+{% load static %}
+{% block content %} 
+{% for item in posts %}
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{item.image.url}}" class="card-img" alt="photo">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{{item.get_absolute_url}}"> {{item.title}}</a>
+            </h5>
+          <p class="card-text">{{item.about}}</p>
+          <p class="card-text"><small class="text-muted">{{item.updated}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+{% if posts.paginator.num_pages > 1 %}
+
+    {% if posts.has_previous %}
+
+        <a href="?page={{ posts.previous_page_number }}">previous</a>
+
+    {% endif %}
+
+    <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+
+    {% if posts.has_next %}
+
+        <a href="?page={{ posts.next_page_number }}">next</a>
+
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
